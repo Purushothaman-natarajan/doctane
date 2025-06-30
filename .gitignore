@@ -1,0 +1,3 @@
+# Ignore dataset cache and model weights
+datasets/cache_datasets/
+model_weights/

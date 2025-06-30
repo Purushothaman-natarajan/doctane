@@ -1,0 +1,11 @@
+Dataset,Language,Paper Link,Dataset Link
+OCR Synthetic Benchmark Dataset for Indic Languages,23 Indic languages,https://arxiv.org/abs/2205.02543,https://www.researchgate.net/publication/360410106_OCR_Synthetic_Benchmark_Dataset_for_Indic_Languages
+Mozhi,13 Indian languages,https://arxiv.org/abs/2205.06740,https://cvit.iiit.ac.in/research/projects/cvit-projects/
+IIIT-INDIC-HW-WORDS,10 Indic scripts,Not specified,https://cvit.iiit.ac.in/research/projects/cvit-projects/iiit-indic-hw-words
+IIIT-IndicSTR-Word,10 Indian languages,Not specified,https://cvit.iiit.ac.in/usodi/istr.php
+Hindi OCR Dataset by IITB,Hindi,Not specified,https://universe.roboflow.com/iitbresearchwork/hindi-ocr
+TEXTRON,Multiple Indian scripts,https://arxiv.org/abs/2402.09811,https://github.com/IITB-LEAP-OCR/TEXTRON
+KhmerST,Khmer (Cambodian),https://arxiv.org/html/2410.18277v1,Not specified
+MLe2e,"Latin, Chinese, Kannada, Hangul",https://arxiv.org/abs/1602.07475,https://paperswithcode.com/dataset/mle2e
+e-Aksharayan,Multiple Indian languages,Not specified,https://en.wikipedia.org/wiki/E-aksharayan
+OCRopus,"Sanskrit, Urdu, Devanagari, Greek",Not specified,https://en.wikipedia.org/wiki/OCRopus

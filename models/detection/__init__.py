@@ -1,0 +1,1 @@
+from receipt_cr.detection.detection_postprocessor import DetectionPostProcessor

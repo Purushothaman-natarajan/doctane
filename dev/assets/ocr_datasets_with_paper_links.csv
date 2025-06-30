@@ -1,0 +1,17 @@
+Dataset,Language,Paper Link,Dataset Link
+ICDAR 2013,English,https://ieeexplore.ieee.org/document/6690058,http://rrc.cvc.uab.es/?ch=2
+ICDAR 2015,English,https://ieeexplore.ieee.org/document/7298658,http://rrc.cvc.uab.es/?ch=4
+ICDAR 2017 MLT,Multi-lingual,https://ieeexplore.ieee.org/document/8270168,http://rrc.cvc.uab.es/?ch=8
+ICDAR 2019 MLT,Multi-lingual,https://ieeexplore.ieee.org/document/8978216,http://rrc.cvc.uab.es/?ch=8
+SynthText,English,https://openaccess.thecvf.com/content_cvpr_2016/papers/Gupta_Synthetic_Data_for_CVPR_2016_paper.pdf,https://github.com/ankush-me/SynthText
+COCO-Text,English,https://openaccess.thecvf.com/content_cvpr_2016/papers/Veit_COCO-Text_Dataset_and_CVPR_2016_paper.pdf,https://bgshih.github.io/cocotext/
+SVT (Street View Text),English,https://www.robots.ox.ac.uk/~vgg/publications/2014/Jaderberg14b/jaderberg14b.pdf,http://www.iapr-tc11.org/mediawiki/index.php/The_Street_View_Text_Dataset
+IIIT 5K-Words,English,https://ieeexplore.ieee.org/document/6460787,http://cvit.iiit.ac.in/projects/SceneTextUnderstanding/
+MJSynth (Synth90k),English,https://arxiv.org/abs/1412.1842,http://www.robots.ox.ac.uk/~vgg/data/text/
+ArT,"English, Chinese",https://arxiv.org/abs/1904.01941,https://github.com/aim-uofa/AdelaiDet
+Total-Text,English,https://ieeexplore.ieee.org/document/8270168,https://github.com/cs-chan/Total-Text-Dataset
+CTW1500,Chinese,https://openaccess.thecvf.com/content_ECCV_2018/papers/Yuliang_Liu_Curve_Text_Detection_ECCV_2018_paper.pdf,https://github.com/Yuliang-Liu/Curve-Text-Detector
+Uber-Text,Multi-lingual,https://arxiv.org/abs/1904.09141,https://github.com/uber-research/uber-text-dataset
+HUST-TR400,English,https://arxiv.org/abs/1810.02779,https://github.com/Yuliang-Liu/Curve-Text-Detector
+FUNSD,English,https://arxiv.org/abs/1905.13538,https://guillaumejaume.github.io/FUNSD/
+SROIE,English,https://arxiv.org/abs/2103.10213,https://rrc.cvc.uab.es/?ch=13
