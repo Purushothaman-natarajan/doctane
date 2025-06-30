@@ -3,9 +3,6 @@
 > **Multimodal Intelligent Document Analysis and Understanding System**  
 > *(Under Development — 🚧 Final details will be added post-deployment)*
 
-<p align="center">
-  <img src="assets/doctane_logo_placeholder.png" alt="Doctane Logo" width="200"/>
-</p>
 
 **Doctane** is a vision-language-based pipeline built to automate document analysis, including OCR, layout understanding, semantic extraction, and captioning — all under one modular framework. Designed for business documents, forms, invoices, and scanned reports.
 
@@ -13,9 +10,6 @@
 
 ## 🧬 Visual Overview
 
-<p align="center">
-  <img src="assets/doctane_architecture_placeholder.png" alt="Doctane Architecture Diagram" width="700"/>
-</p>
 
 > 🔧 TODO: Replace the above placeholder with the finalized Doctane architecture.
 The pipeline processes documents through the following stages:
