@@ -588,6 +588,11 @@
                     <h3>Structured Output</h3>
                     <p>Hierarchical Document objects (Page, Block, Line, Word). Export to JSON and hOCR formats.</p>
                 </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Train Your Own Models</h3>
+                    <p>Complete training scripts with DDP support. Bring your own infrastructure - we provide the code, you bring the compute.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -696,8 +701,8 @@
 <span class="comment"># Install dependencies</span>
 <span class="keyword">pip</span> install -r requirements.txt
 
-<span class="comment"># Run the web interface</span>
-<span class="keyword">python</span> app.py
+<span class="comment"># Start the API server</span>
+<span class="keyword">python</span> api/main.py
             </div>
             <div class="setup-steps">
                 <div class="setup-step">
@@ -713,7 +718,20 @@
                 <div class="setup-step">
                     <div class="setup-step-number">3</div>
                     <h4>Launch</h4>
-                    <p>Start the API server and open http://localhost:8000/app</p>
+                    <p>Start API server and open http://localhost:8000/app</p>
+                </div>
+            </div>
+            <div class="section-header" style="margin-top: 3rem;">
+                <h2 style="font-size: 1.5rem;">Important Notes</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 0.75rem;">🔧 No Pre-trained Weights</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">We provide the <strong>code only</strong>, not pre-trained model weights. You need to train your own models using the provided training scripts. We don't host or provide any model weights.</p>
+                </div>
+                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">💻 Bring Your Infrastructure</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Training requires GPU resources. You must have your own infrastructure (local GPU, cloud instances like AWS/GCP/Azure). We support distributed training with DDP for multi-GPU setups.</p>
                 </div>
             </div>
         </div>
