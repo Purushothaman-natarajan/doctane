@@ -6,180 +6,125 @@
     <title>Architecture | Doctane</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --border: #1e293b;
-            --card-bg: #1e293b;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--darker); color: var(--light); line-height: 1.6; }
+        :root { --bg-body: #ffffff; --bg-surface: #f0f4f8; --text-primary: #1a1a2e; --text-secondary: #4a5568; --text-tertiary: #718096; --accent-blue: #1a73e8; --accent-blue-hover: #1557b0; --accent-green: #34a853; --accent-orange: #fbbc04; --accent-purple: #8b5cf6; --border-light: #e2e8f0; --shadow-md: 0 8px 24px rgba(26, 115, 232, 0.12); --shadow-lg: 0 20px 40px rgba(26, 115, 232, 0.16); }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
         a { color: inherit; text-decoration: none; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
         
-        header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-        }
-        .nav-container {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1rem 2rem; max-width: 1400px; margin: 0 auto;
-        }
-        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.5rem; }
-        .logo-icon {
-            width: 40px; height: 40px; background: var(--gradient);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
-        }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { font-weight: 500; color: var(--gray); transition: color 0.2s; }
-        .nav-links a:hover { color: var(--light); }
-        .btn {
-            padding: 0.625rem 1.25rem; border-radius: 8px; font-weight: 500;
-            font-size: 0.875rem; cursor: pointer; transition: all 0.2s; border: none;
-        }
-        .btn-primary { background: var(--gradient); color: white; }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--light); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate { animation: fadeInUp 0.5s ease-out both; }
         
-        .main { padding: 8rem 0 4rem; }
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); transition: all 0.3s; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+        .logo { display: flex; align-items: center; gap: 0.625rem; font-size: 1.375rem; font-weight: 600; letter-spacing: -0.01em; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.125rem; box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25); }
+        nav { display: flex; align-items: center; gap: 0.5rem; }
+        .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+        .nav-links a { padding: 0.5rem 1rem; font-size: 0.875rem; color: var(--text-secondary); border-radius: 100px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; }
+        .nav-links a:hover { background: var(--bg-surface); color: var(--accent-purple); }
+        .btn { display: inline-flex; align-items: center; padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; }
+        .btn-primary { background: var(--accent-blue); color: white; }
+        .btn-primary:hover { background: var(--accent-blue-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: transparent; color: var(--accent-blue); }
+        
+        .main { padding: 6rem 0 4rem; }
         .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .section-header p { color: var(--gray); max-width: 600px; margin: 0 auto; }
+        .section-header h1 { font-size: 2.5rem; font-weight: 400; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-secondary); }
         
-        .architecture-diagram {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 16px; padding: 2rem; margin-bottom: 3rem;
-        }
+        .architecture-diagram { background: var(--bg-surface); border-radius: 24px; padding: 2rem; margin-bottom: 3rem; }
         
-        .pipeline-flow {
-            display: flex; align-items: center; justify-content: center;
-            gap: 1rem; flex-wrap: wrap; margin: 2rem 0;
-        }
-        .pipeline-box {
-            background: var(--dark); border: 2px solid var(--primary);
-            border-radius: 12px; padding: 1.5rem 2rem; text-align: center;
-            min-width: 160px;
-        }
-        .pipeline-box.active { background: rgba(99, 102, 241, 0.1); }
-        .pipeline-box h4 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--primary); }
-        .pipeline-box p { font-size: 0.75rem; color: var(--gray); }
-        .arrow { color: var(--primary); font-size: 1.5rem; }
+        .pipeline-flow { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 2rem 0; }
+        .pipeline-box { background: var(--bg-body); border: 2px solid var(--accent-blue); border-radius: 16px; padding: 1.5rem 2rem; text-align: center; min-width: 160px; transition: all 0.3s; }
+        .pipeline-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .pipeline-box h4 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent-blue); }
+        .pipeline-box p { font-size: 0.75rem; color: var(--text-secondary); }
+        .arrow { color: var(--accent-blue); font-size: 1.5rem; }
         
-        .component-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem;
-        }
-        .component-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: 1.5rem;
-        }
-        .component-card h3 {
-            font-size: 1.125rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
-        }
-        .component-card h3 span { font-size: 1.25rem; }
-        .component-card p { color: var(--gray); font-size: 0.9rem; }
+        .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .component-card { background: var(--bg-surface); border-radius: 16px; padding: 1.5rem; transition: all 0.3s; }
+        .component-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .component-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .component-card p { color: var(--text-secondary); font-size: 0.9rem; }
         .component-card ul { list-style: none; margin-top: 1rem; }
-        .component-card li {
-            padding: 0.5rem 0; border-bottom: 1px solid var(--border);
-            font-size: 0.85rem; color: var(--gray); display: flex; justify-content: space-between;
-        }
+        .component-card li { padding: 0.5rem 0; border-bottom: 1px solid var(--border-light); font-size: 0.85rem; color: var(--text-secondary); display: flex; justify-content: space-between; }
         .component-card li:last-child { border-bottom: none; }
-        .component-card li span { color: var(--secondary); }
+        .component-card li span { color: var(--accent-green); }
         
-        .data-flow {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: 2rem; margin-top: 3rem;
-        }
+        .data-flow { background: var(--bg-surface); border-radius: 16px; padding: 2rem; margin-top: 3rem; }
         .data-flow h3 { margin-bottom: 1.5rem; }
-        .flow-step {
-            display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem;
-        }
-        .flow-step-num {
-            width: 28px; height: 28px; background: var(--primary);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 0.875rem; flex-shrink: 0;
-        }
+        .flow-step { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+        .flow-step-num { width: 28px; height: 28px; background: var(--accent-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 0.875rem; color: white; flex-shrink: 0; }
         .flow-step-content h4 { font-size: 1rem; margin-bottom: 0.25rem; }
-        .flow-step-content p { color: var(--gray); font-size: 0.875rem; }
+        .flow-step-content p { color: var(--text-secondary); font-size: 0.875rem; }
         
-        footer {
-            background: var(--dark); border-top: 1px solid var(--border);
-            padding: 2rem 0; margin-top: 4rem;
-        }
-        .footer-content {
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 1rem;
-        }
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-light); padding: 2rem 0; margin-top: 4rem; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { color: var(--gray); font-size: 0.875rem; }
-        .footer-copy { color: var(--gray); font-size: 0.875rem; }
+        .footer-links a { font-size: 0.875rem; color: var(--text-secondary); }
+        .footer-links a:hover { color: var(--text-primary); }
+        .footer-copy { font-size: 0.875rem; color: var(--text-tertiary); }
         
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .pipeline-flow { flex-direction: column; }
-            .arrow { transform: rotate(90deg); }
-        }
+        @media (max-width: 768px) { .nav-links { display: none; } .pipeline-flow { flex-direction: column; } .arrow { transform: rotate(90deg); } }
     </style>
 </head>
 <body>
     <header>
-        <nav class="nav-container">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">🔬</div>
-                <span>Doctane</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#pipeline">Pipeline</a></li>
-                <li><a href="index.html#models">Models</a></li>
-                <li><a href="index.html#quickstart">Quick Start</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
-                <a href="docs.html" class="btn btn-primary">Docs</a>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo"><div class="logo-icon">🔬</div><span>Doctane</span></a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#pipeline">Pipeline</a></li>
+                        <li><a href="index.html#models">Models</a></li>
+                        <li><a href="index.html#quickstart">Get Started</a></li>
+                        <li><a href="index.html#profile">Profile</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
+                        <a href="docs.html" class="btn btn-primary">Docs</a>
+                    </div>
+                </nav>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main class="main">
         <div class="container">
             <div class="section-header">
                 <h1>System Architecture</h1>
-                <p>Understanding Doctane's modular pipeline design for document analysis</p>
+                <p>Understanding Doctane's modular pipeline design</p>
             </div>
             
             <div class="architecture-diagram">
                 <h3 style="margin-bottom: 1.5rem; text-align: center;">Processing Pipeline</h3>
                 <div class="pipeline-flow">
-                    <div class="pipeline-box active">
+                    <div class="pipeline-box animate" style="animation-delay: 0.1s;">
                         <h4>📄 Input</h4>
                         <p>Images & PDFs</p>
                     </div>
                     <span class="arrow">→</span>
-                    <div class="pipeline-box">
+                    <div class="pipeline-box animate" style="animation-delay: 0.2s;">
                         <h4>🔄 Preprocess</h4>
                         <p>Orientation & Straighten</p>
                     </div>
                     <span class="arrow">→</span>
-                    <div class="pipeline-box">
+                    <div class="pipeline-box animate" style="animation-delay: 0.3s;">
                         <h4>🎯 Detect</h4>
                         <p>Text Boxes</p>
                     </div>
                     <span class="arrow">→</span>
-                    <div class="pipeline-box">
+                    <div class="pipeline-box animate" style="animation-delay: 0.4s;">
                         <h4>📝 Recognize</h4>
                         <p>Text Transcription</p>
                     </div>
                     <span class="arrow">→</span>
-                    <div class="pipeline-box">
+                    <div class="pipeline-box animate" style="animation-delay: 0.5s;">
                         <h4>📦 Output</h4>
                         <p>Document Object</p>
                     </div>
@@ -187,8 +132,8 @@
             </div>
             
             <div class="component-grid">
-                <div class="component-card">
-                    <h3><span>🖼️</span> Preprocessor</h3>
+                <div class="component-card animate" style="animation-delay: 0.1s;">
+                    <h3>🖼️ Preprocessor</h3>
                     <p>Handles image preprocessing including orientation detection and page straightening.</p>
                     <ul>
                         <li>Orientation Detection <span>✓</span></li>
@@ -196,9 +141,8 @@
                         <li>Image Enhancement <span>✓</span></li>
                     </ul>
                 </div>
-                
-                <div class="component-card">
-                    <h3><span>🎯</span> Detection Module</h3>
+                <div class="component-card animate" style="animation-delay: 0.2s;">
+                    <h3>🎯 Detection Module</h3>
                     <p>Segmentation-based text detection with support for straight and rotated text.</p>
                     <ul>
                         <li>LinkNet <span>✓</span></li>
@@ -206,9 +150,8 @@
                         <li>SegFormer <span>✓</span></li>
                     </ul>
                 </div>
-                
-                <div class="component-card">
-                    <h3><span>📝</span> Recognition Module</h3>
+                <div class="component-card animate" style="animation-delay: 0.3s;">
+                    <h3>📝 Recognition Module</h3>
                     <p>Sequence-to-sequence text recognition with attention mechanisms.</p>
                     <ul>
                         <li>SAR <span>✓</span></li>
@@ -216,9 +159,8 @@
                         <li>CRNN <span>✓</span></li>
                     </ul>
                 </div>
-                
-                <div class="component-card">
-                    <h3><span>🔧</span> Builder Module</h3>
+                <div class="component-card animate" style="animation-delay: 0.4s;">
+                    <h3>🔧 Builder Module</h3>
                     <p>Constructs hierarchical Document objects with structure preservation.</p>
                     <ul>
                         <li>Page <span>✓</span></li>
@@ -226,9 +168,8 @@
                         <li>Line/Word <span>✓</span></li>
                     </ul>
                 </div>
-                
-                <div class="component-card">
-                    <h3><span>⚡</span> Training Module</h3>
+                <div class="component-card animate" style="animation-delay: 0.5s;">
+                    <h3>⚡ Training Module</h3>
                     <p>Distributed training support with DDP for multi-GPU setups.</p>
                     <ul>
                         <li>DDP Support <span>✓</span></li>
@@ -236,9 +177,8 @@
                         <li>Logging <span>✓</span></li>
                     </ul>
                 </div>
-                
-                <div class="component-card">
-                    <h3><span>🌐</span> Export Module</h3>
+                <div class="component-card animate" style="animation-delay: 0.6s;">
+                    <h3>🌐 Export Module</h3>
                     <p>Multiple output formats for downstream processing.</p>
                     <ul>
                         <li>JSON <span>✓</span></li>
@@ -250,47 +190,29 @@
             
             <div class="data-flow">
                 <h3>Data Flow Architecture</h3>
-                <div class="flow-step">
+                <div class="flow-step animate" style="animation-delay: 0.1s;">
                     <div class="flow-step-num">1</div>
-                    <div class="flow-step-content">
-                        <h4>Image Input</h4>
-                        <p>Raw images (PNG, JPG, PDF) are loaded and converted to numpy arrays</p>
-                    </div>
+                    <div class="flow-step-content"><h4>Image Input</h4><p>Raw images (PNG, JPG, PDF) are loaded and converted to numpy arrays</p></div>
                 </div>
-                <div class="flow-step">
+                <div class="flow-step animate" style="animation-delay: 0.2s;">
                     <div class="flow-step-num">2</div>
-                    <div class="flow-step-content">
-                        <h4>Preprocessing</h4>
-                        <p>OrientationPredictor detects page tilt, OrientationCorrector straightens if needed</p>
-                    </div>
+                    <div class="flow-step-content"><h4>Preprocessing</h4><p>OrientationPredictor detects page tilt, OrientationCorrector straightens if needed</p></div>
                 </div>
-                <div class="flow-step">
+                <div class="flow-step animate" style="animation-delay: 0.3s;">
                     <div class="flow-step-num">3</div>
-                    <div class="flow-step-content">
-                        <h4>Text Detection</h4>
-                        <p>DetectionPredictor runs segmentation model to produce binary mask of text regions</p>
-                    </div>
+                    <div class="flow-step-content"><h4>Text Detection</h4><p>DetectionPredictor runs segmentation model to produce binary mask of text regions</p></div>
                 </div>
-                <div class="flow-step">
+                <div class="flow-step animate" style="animation-delay: 0.4s;">
                     <div class="flow-step-num">4</div>
-                    <div class="flow-step-content">
-                        <h4>Crop Extraction</h4>
-                        <p>Geometry module extracts ROIs based on detection mask contours</p>
-                    </div>
+                    <div class="flow-step-content"><h4>Crop Extraction</h4><p>Geometry module extracts ROIs based on detection mask contours</p></div>
                 </div>
-                <div class="flow-step">
+                <div class="flow-step animate" style="animation-delay: 0.5s;">
                     <div class="flow-step-num">5</div>
-                    <div class="flow-step-content">
-                        <h4>Text Recognition</h4>
-                        <p>RecognitionPredictor transcribes each crop to text using trained model</p>
-                    </div>
+                    <div class="flow-step-content"><h4>Text Recognition</h4><p>RecognitionPredictor transcribes each crop to text using trained model</p></div>
                 </div>
-                <div class="flow-step">
+                <div class="flow-step animate" style="animation-delay: 0.6s;">
                     <div class="flow-step-num">6</div>
-                    <div class="flow-step-content">
-                        <h4>Document Assembly</h4>
-                        <p>DocumentBuilder assembles Page → Block → Line → Word hierarchy with confidence</p>
-                    </div>
+                    <div class="flow-step-content"><h4>Document Assembly</h4><p>DocumentBuilder assembles Page → Block → Line → Word hierarchy with confidence</p></div>
                 </div>
             </div>
         </div>
@@ -300,13 +222,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="index.html">Home</a>
-                    <a href="docs.html">Docs</a>
-                    <a href="architecture.html">Architecture</a>
-                    <a href="developer-guide.html">Developer Guide</a>
-                    <a href="privacy.html">Privacy</a>
-                    <a href="terms.html">Terms</a>
-                    <a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
+                    <a href="index.html">Home</a><a href="docs.html">Docs</a><a href="architecture.html">Architecture</a><a href="developer-guide.html">Developer Guide</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
                 </div>
                 <p class="footer-copy">Doctane - OCR Development Environment</p>
             </div>

@@ -6,176 +6,103 @@
     <title>Developer Guide | Doctane</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --border: #1e293b;
-            --card-bg: #1e293b;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--darker); color: var(--light); line-height: 1.6; }
+        :root { --bg-body: #ffffff; --bg-surface: #f0f4f8; --text-primary: #1a1a2e; --text-secondary: #4a5568; --text-tertiary: #718096; --accent-blue: #1a73e8; --accent-blue-hover: #1557b0; --accent-green: #34a853; --accent-orange: #fbbc04; --accent-purple: #8b5cf6; --border-light: #e2e8f0; --shadow-md: 0 8px 24px rgba(26, 115, 232, 0.12); }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
         a { color: inherit; text-decoration: none; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-        }
-        .nav-container {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1rem 2rem; max-width: 1400px; margin: 0 auto;
-        }
-        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.5rem; }
-        .logo-icon {
-            width: 40px; height: 40px; background: var(--gradient);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
-        }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { font-weight: 500; color: var(--gray); transition: color 0.2s; }
-        .nav-links a:hover { color: var(--light); }
-        .btn {
-            padding: 0.625rem 1.25rem; border-radius: 8px; font-weight: 500;
-            font-size: 0.875rem; cursor: pointer; transition: all 0.2s; border: none;
-        }
-        .btn-primary { background: var(--gradient); color: white; }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--light); }
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); transition: all 0.3s; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+        .logo { display: flex; align-items: center; gap: 0.625rem; font-size: 1.375rem; font-weight: 600; letter-spacing: -0.01em; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.125rem; box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25); }
+        nav { display: flex; align-items: center; gap: 0.5rem; }
+        .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+        .nav-links a { padding: 0.5rem 1rem; font-size: 0.875rem; color: var(--text-secondary); border-radius: 100px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; }
+        .nav-links a:hover { background: var(--bg-surface); color: var(--accent-purple); }
+        .btn { display: inline-flex; align-items: center; padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; }
+        .btn-primary { background: var(--accent-blue); color: white; }
+        .btn-primary:hover { background: var(--accent-blue-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: transparent; color: var(--accent-blue); }
         
-        .main { padding: 8rem 0 4rem; }
-        
+        .main { padding: 6rem 0 4rem; }
         .section-header { margin-bottom: 2rem; }
-        .section-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .section-header p { color: var(--gray); }
+        .section-header h1 { font-size: 2.5rem; font-weight: 400; margin-bottom: 0.5rem; }
+        .section-header p { color: var(--text-secondary); }
         
-        .code-block {
-            background: var(--darker); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.25rem; font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem; overflow-x: auto; margin: 1rem 0;
-        }
-        .code-block .comment { color: var(--gray); }
-        .code-block .keyword { color: var(--primary); }
-        .code-block .string { color: var(--secondary); }
-        .code-block .function { color: var(--accent); }
+        .code-block { background: #1e1e1e; border-radius: 12px; padding: 1.25rem; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 1rem 0; }
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #569cd6; }
         
-        .guide-section {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem;
-        }
-        .guide-section h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-        .guide-section h3 { font-size: 1.125rem; margin: 1.5rem 0 0.75rem; }
-        .guide-section p { color: var(--gray); margin-bottom: 1rem; }
-        .guide-section ul { margin: 1rem 0 1rem 1.5rem; color: var(--gray); }
-        .guide-section li { margin-bottom: 0.5rem; }
+        .guide-section { background: var(--bg-surface); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
+        .guide-section h2 { font-size: 1.5rem; font-weight: 500; margin-bottom: 1rem; }
+        .guide-section h3 { font-size: 1.125rem; font-weight: 500; margin: 1.5rem 0 0.75rem; }
+        .guide-section p { color: var(--text-secondary); margin-bottom: 1rem; }
         
-        .setup-steps {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;
-        }
-        .setup-step {
-            background: var(--dark); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.25rem;
-        }
+        .setup-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+        @media (max-width: 1024px) { .setup-steps { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .setup-steps { grid-template-columns: 1fr; } }
+        .setup-step { background: var(--bg-body); border-radius: 12px; padding: 1.25rem; transition: all 0.3s; }
+        .setup-step:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
         .setup-step h4 { font-size: 1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-        .setup-step-num {
-            width: 24px; height: 24px; background: var(--primary);
-            border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-            font-size: 0.75rem; font-weight: 600;
-        }
-        .setup-step p { color: var(--gray); font-size: 0.875rem; }
+        .setup-step-num { width: 24px; height: 24px; background: var(--accent-blue); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: white; }
+        .setup-step p { color: var(--text-secondary); font-size: 0.875rem; }
         
-        .env-table {
-            width: 100%; border-collapse: collapse; margin: 1rem 0;
-        }
-        .env-table th, .env-table td {
-            padding: 0.75rem; text-align: left; border: 1px solid var(--border);
-        }
-        .env-table th { background: var(--dark); font-weight: 600; }
-        .env-table td { color: var(--gray); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+        .note { padding: 1rem 1.25rem; border-radius: 12px; margin: 1rem 0; background: #e6f4ea; border: 1px solid var(--accent-green); }
+        .note h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem; color: #137333; }
         
-        footer {
-            background: var(--dark); border-top: 1px solid var(--border);
-            padding: 2rem 0; margin-top: 4rem;
-        }
-        .footer-content {
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 1rem;
-        }
+        .env-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .env-table th, .env-table td { padding: 0.75rem; text-align: left; border: 1px solid var(--border-light); }
+        .env-table th { background: var(--bg-surface); font-weight: 500; }
+        .env-table td { color: var(--text-secondary); font-family: monospace; font-size: 0.85rem; }
+        
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-light); padding: 2rem 0; margin-top: 4rem; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { color: var(--gray); font-size: 0.875rem; }
-        .footer-copy { color: var(--gray); font-size: 0.875rem; }
-        
-        @media (max-width: 768px) {
-            .setup-steps { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-        }
+        .footer-links a { font-size: 0.875rem; color: var(--text-secondary); }
+        .footer-copy { font-size: 0.875rem; color: var(--text-tertiary); }
     </style>
 </head>
 <body>
     <header>
-        <nav class="nav-container">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">🔬</div>
-                <span>Doctane</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#pipeline">Pipeline</a></li>
-                <li><a href="index.html#models">Models</a></li>
-                <li><a href="index.html#quickstart">Quick Start</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
-                <a href="docs.html" class="btn btn-primary">Docs</a>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo"><div class="logo-icon">🔬</div><span>Doctane</span></a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#pipeline">Pipeline</a></li>
+                        <li><a href="index.html#models">Models</a></li>
+                        <li><a href="index.html#quickstart">Get Started</a></li>
+                        <li><a href="index.html#profile">Profile</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
+                        <a href="docs.html" class="btn btn-primary">Docs</a>
+                    </div>
+                </nav>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main class="main">
         <div class="container">
             <div class="section-header">
                 <h1>Developer Guide</h1>
-                <p>Complete guide to setting up development environment and contributing to Doctane</p>
+                <p>Complete guide to setting up development environment and contributing</p>
             </div>
             
             <div class="guide-section">
-                <h2>🔧 Development Setup</h2>
+                <h2>🛠️ Development Setup</h2>
                 <div class="setup-steps">
-                    <div class="setup-step">
-                        <h4><span class="setup-step-num">1</span> Clone Repository</h4>
-                        <div class="code-block" style="margin-top: 0.5rem; padding: 0.75rem;">
-<span class="keyword">git</span> clone https://github.com/Purushothaman-natarajan/doctane.git
-<span class="keyword">cd</span> doctane
-                        </div>
-                    </div>
-                    <div class="setup-step">
-                        <h4><span class="setup-step-num">2</span> Create Virtual Environment</h4>
-                        <div class="code-block" style="margin-top: 0.5rem; padding: 0.75rem;">
-<span class="keyword">python</span> -m venv venv
-<span class="keyword">venv</span>\Scripts\activate  <span class="comment"># Windows</span>
-<span class="comment"># source venv/bin/activate  # Linux/Mac</span>
-                        </div>
-                    </div>
-                    <div class="setup-step">
-                        <h4><span class="setup-step-num">3</span> Install Dependencies</h4>
-                        <div class="code-block" style="margin-top: 0.5rem; padding: 0.75rem;">
-<span class="keyword">pip</span> install -r requirements.txt
-<span class="keyword">pip</span> install -e .
-                        </div>
-                    </div>
-                    <div class="setup-step">
-                        <h4><span class="setup-step-num">4</span> Run Development Server</h4>
-                        <div class="code-block" style="margin-top: 0.5rem; padding: 0.75rem;">
-<span class="keyword">python</span> api/main.py
-                        </div>
-                    </div>
+                    <div class="setup-step"><h4><span class="setup-step-num">1</span> Clone</h4><p>git clone https://github.com/Purushothaman-natarajan/doctane.git</p></div>
+                    <div class="setup-step"><h4><span class="setup-step-num">2</span> Virtual Env</h4><p>python -m venv venv && venv\Scripts\activate</p></div>
+                    <div class="setup-step"><h4><span class="setup-step-num">3</span> Install</h4><p>pip install -r requirements.txt && pip install -e .</p></div>
+                    <div class="setup-step"><h4><span class="setup-step-num">4</span> Run</h4><p>python api/main.py</p></div>
                 </div>
             </div>
             
@@ -183,119 +110,26 @@
                 <h2>⚙️ Environment Variables</h2>
                 <table class="env-table">
                     <tr><th>Variable</th><th>Description</th><th>Default</th></tr>
-                    <tr><td>BUILD_VERSION</td><td>Package version string</td><td>0.1.0a0</td></tr>
-                    <tr><td>CHECKPOINT_DIR</td><td>Model checkpoints directory</td><td>./checkpoints</td></tr>
-                    <tr><td>DATA_DIR</td><td>Training data directory</td><td>./data</td></tr>
-                    <tr><td>LOG_DIR</td><td>Training logs directory</td><td>./logs</td></tr>
+                    <tr><td>BUILD_VERSION</td><td>Package version</td><td>0.1.0a0</td></tr>
+                    <tr><td>CHECKPOINT_DIR</td><td>Model checkpoints</td><td>./checkpoints</td></tr>
+                    <tr><td>DATA_DIR</td><td>Training data</td><td>./data</td></tr>
+                    <tr><td>LOG_DIR</td><td>Training logs</td><td>./logs</td></tr>
                 </table>
             </div>
             
-            <div class="guide-section">
-                <h2>🧪 Running Tests</h2>
-                <div class="code-block">
-<span class="comment"># Run all tests</span>
-<span class="keyword">pytest</span> tests/
-
-<span class="comment"># Run specific test file</span>
-<span class="keyword">pytest</span> tests/test_detection.py -v
-
-<span class="comment"># Run with coverage</span>
-<span class="keyword">pytest</span> tests/ --cov=doctane --cov-report=html
-                </div>
+            <div class="note">
+                <h4>💡 Infrastructure Required</h4>
+                <p>Training requires GPU resources. Provide your own compute (local GPU, AWS, GCP, Azure). We provide the code and training scripts - you bring the hardware.</p>
             </div>
             
             <div class="guide-section">
                 <h2>🏋️ Training Models</h2>
-                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-                    <p style="color: var(--secondary); font-size: 0.9rem; margin: 0;"><strong>💡 Infrastructure Required:</strong> Training requires GPU resources. Provide your own compute infrastructure (local GPU, AWS, GCP, Azure). We provide the code and training scripts - you bring the hardware.</p>
-                </div>
-                
-                <h3>Text Detection Training</h3>
-                <div class="code-block">
-<span class="keyword">python</span> train/text_detection/train_detection.py \
-    --config configs/detection.yaml \
-    --epochs 100 \
-    --batch_size 8 \
-    --lr 0.001
-                </div>
-                
-                <h3>Text Recognition Training</h3>
-                <div class="code-block">
-<span class="keyword">python</span> train/text_recognition/train_recognition.py \
-    --config configs/recognition.yaml \
-    --epochs 50 \
-    --batch_size 32
-                </div>
-                
-                <h3>Distributed Training (DDP)</h3>
-                <div class="code-block">
-<span class="keyword">torchrun</span> --nproc_per_node=4 \
-    train/text_detection/train_detection_ddp.py \
-    --config configs/detection.yaml
-                </div>
-            </div>
-            
-            <div class="guide-section">
-                <h2>🚀 Inference</h2>
-                <h3>Command Line</h3>
-                <div class="code-block">
-<span class="keyword">python</span> scripts/run_inference.py \
-    --input_dir data/raw \
-    --output_dir results/outputs \
-    --model_type seg_linknet_resnet50
-                </div>
-                
-                <h3>Python API</h3>
-                <div class="code-block">
-<span class="keyword">from</span> doctane.ocr_pipeline.ocr_predictor <span class="keyword">import</span> OCRPredictor
-
-predictor = OCRPredictor()
-results = predictor([image_array])
-results.show()
-                </div>
-            </div>
-            
-            <div class="guide-section">
-                <h2>🎯 Project Structure</h2>
-                <div class="code-block">
-doctane/
-├── api/                    <span class="comment"># FastAPI backend</span>
-│   └── main.py             <span class="comment"># API server</span>
-├── app.html                <span class="comment"># Web interface</span>
-├── index.html              <span class="comment"># Landing page</span>
-├── docs.html              <span class="comment"># Documentation</span>
-├── architecture.html      <span class="comment"># System architecture</span>
-├── profile.html           <span class="comment"># Developer profile</span>
-├── developer-guide.html   <span class="comment"># This guide</span>
-│
-├── doctane/               <span class="comment"># Main package</span>
-│   ├── __init__.py
-│   ├── version.py
-│   ├── predictor/         <span class="comment"># Predictor classes</span>
-│   ├── ocr_pipeline/      <span class="comment"># OCR pipeline</span>
-│   ├── models/            <span class="comment"># Model definitions</span>
-│   ├── datasets/          <span class="comment"># Dataset loaders</span>
-│   ├── train/             <span class="comment"># Training scripts</span>
-│   ├── utils/             <span class="comment"># Utilities</span>
-│   └── evaluate/          <span class="comment"># Evaluation</span>
-│
-├── configs/               <span class="comment"># YAML configs</span>
-├── data/                  <span class="comment"># Data directory</span>
-├── scripts/               <span class="comment"># Utility scripts</span>
-├── tests/                 <span class="comment"># Unit tests</span>
-└── requirements.txt       <span class="comment"># Dependencies</span>
-                </div>
-            </div>
-            
-            <div class="guide-section">
-                <h2>🤝 Contributing</h2>
-                <ul>
-                    <li>Fork the repository</li>
-                    <li>Create a feature branch (git checkout -b feature/your-feature)</li>
-                    <li>Make changes and add tests</li>
-                    <li>Run linting and type checking</li>
-                    <li>Submit a pull request</li>
-                </ul>
+                <h3>Text Detection</h3>
+                <div class="code-block">python train/text_detection/train_detection.py --config configs/detection.yaml --epochs 100</div>
+                <h3>Text Recognition</h3>
+                <div class="code-block">python train/text_recognition/train_recognition.py --config configs/recognition.yaml --epochs 50</div>
+                <h3>Distributed (DDP)</h3>
+                <div class="code-block">torchrun --nproc_per_node=4 train/text_detection/train_detection_ddp.py --config configs/detection.yaml</div>
             </div>
         </div>
     </main>
@@ -304,13 +138,7 @@ doctane/
         <div class="container">
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="index.html">Home</a>
-                    <a href="docs.html">Docs</a>
-                    <a href="architecture.html">Architecture</a>
-                    <a href="developer-guide.html">Developer Guide</a>
-                    <a href="privacy.html">Privacy</a>
-                    <a href="terms.html">Terms</a>
-                    <a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
+                    <a href="index.html">Home</a><a href="docs.html">Docs</a><a href="architecture.html">Architecture</a><a href="developer-guide.html">Developer Guide</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
                 </div>
                 <p class="footer-copy">Doctane - OCR Development Environment</p>
             </div>
