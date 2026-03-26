@@ -1,1 +1,1 @@
-from receipt_cr.detection.detection_postprocessor import DetectionPostProcessor
+from doctane.models.detection.detection_postprocessor import DetectionPostProcessor

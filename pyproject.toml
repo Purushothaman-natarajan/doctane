@@ -9,7 +9,7 @@ description = "Doctane: Like Octane — fast, powerful doc processing multi-mode
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [
-    { name="zeross", email="purushothamanprt@gmail.com" }
+    { name="Doctane", email="purushothamanprt@gmail.com" }
 ]
 license = {file = "LICENSE"}
 classifiers = [

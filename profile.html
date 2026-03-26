@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Profile | Doctane</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #1e293b;
+            --card-bg: #1e293b;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--darker); color: var(--light); line-height: 1.6; }
+        a { color: inherit; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-container {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2rem; max-width: 1400px; margin: 0 auto;
+        }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.5rem; }
+        .logo-icon {
+            width: 40px; height: 40px; background: var(--gradient);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { font-weight: 500; color: var(--gray); transition: color 0.2s; }
+        .nav-links a:hover { color: var(--light); }
+        .btn {
+            padding: 0.625rem 1.25rem; border-radius: 8px; font-weight: 500;
+            font-size: 0.875rem; cursor: pointer; transition: all 0.2s; border: none;
+        }
+        .btn-primary { background: var(--gradient); color: white; }
+        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--light); }
+        
+        .main { padding: 8rem 0 4rem; }
+        
+        .profile-header {
+            display: flex; align-items: center; gap: 2rem;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .profile-avatar {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: var(--gradient); display: flex;
+            align-items: center; justify-content: center; font-size: 3rem;
+            flex-shrink: 0;
+        }
+        .profile-info h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .profile-info p { color: var(--gray); margin-bottom: 1rem; }
+        .profile-links { display: flex; gap: 1rem; }
+        .profile-links a {
+            padding: 0.5rem 1rem; background: var(--dark); border: 1px solid var(--border);
+            border-radius: 8px; font-size: 0.875rem; transition: all 0.2s;
+        }
+        .profile-links a:hover { border-color: var(--primary); }
+        
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1.5rem; text-align: center;
+        }
+        .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--primary); }
+        .stat-card .label { font-size: 0.875rem; color: var(--gray); }
+        
+        .projects-section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; }
+        .projects-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;
+        }
+        .project-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1.5rem; transition: all 0.3s;
+        }
+        .project-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .project-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+        .project-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+        .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .project-tag {
+            padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 100px;
+            font-size: 0.75rem; color: var(--primary);
+        }
+        
+        .skills-section {
+            margin-top: 3rem;
+        }
+        .skills-section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; }
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+        }
+        .skill-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1rem; text-align: center;
+        }
+        .skill-card h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+        .skill-card p { color: var(--gray); font-size: 0.8rem; }
+        
+        footer {
+            background: var(--dark); border-top: 1px solid var(--border);
+            padding: 2rem 0; margin-top: 4rem;
+        }
+        .footer-content {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 1rem;
+        }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { color: var(--gray); font-size: 0.875rem; }
+        .footer-copy { color: var(--gray); font-size: 0.875rem; }
+        
+        @media (max-width: 768px) {
+            .profile-header { flex-direction: column; text-align: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🔬</div>
+                <span>Doctane</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#pipeline">Pipeline</a></li>
+                <li><a href="index.html#models">Models</a></li>
+                <li><a href="index.html#quickstart">Quick Start</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
+                <a href="docs.html" class="btn btn-primary">Docs</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">👨‍💻</div>
+                <div class="profile-info">
+                    <h1>Purushothaman Natarajan</h1>
+                    <p>AI Engineer & Full-Stack Developer specializing in Computer Vision, NLP, and Deep Learning systems.</p>
+                    <div class="profile-links">
+                        <a href="https://github.com/Purushothaman-natarajan">GitHub</a>
+                        <a href="https://purushothaman-natarajan.github.io/">Portfolio</a>
+                        <a href="mailto:purushothamanprt@gmail.com">Email</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="value">15+</div>
+                    <div class="label">GitHub Repositories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">1000+</div>
+                    <div class="label">GitHub Stars</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">50+</div>
+                    <div class="label">Projects Built</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">5+</div>
+                    <div class="label">Years Experience</div>
+                </div>
+            </div>
+            
+            <div class="projects-section">
+                <h2>Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>🧠 Doctane</h3>
+                        <p>Multimodal intelligent document analysis and understanding system with OCR, layout understanding, and semantic extraction.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">PyTorch</span>
+                            <span class="project-tag">OCR</span>
+                            <span class="project-tag">Computer Vision</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3>🔒 Exploit2Patch</h3>
+                        <p>AI-Powered Vulnerability Intelligence Platform with autonomous CVE research, URL validation, and automated patch generation.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">AI Agents</span>
+                            <span class="project-tag">Cybersecurity</span>
+                            <span class="project-tag">Python</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3>🧪 DL-Studio</h3>
+                        <p>Local deep learning development environment with 20+ algorithms, built-in XAI, and Streamlit interface.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Deep Learning</span>
+                            <span class="project-tag">XAI</span>
+                            <span class="project-tag">Streamlit</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3>📄 Mistral OCR</h3>
+                        <p>Integration with Mistral OCR API for intelligent document processing and text extraction.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">OCR</span>
+                            <span class="project-tag">API</span>
+                            <span class="project-tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="skills-section">
+                <h2>Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h4>🤖 AI/ML</h4>
+                        <p>PyTorch, TensorFlow, Transformers, LangChain</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>👁️ Computer Vision</h4>
+                        <p>OCR, Object Detection, Segmentation, OCR</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>🌐 Web Development</h4>
+                        <p>Streamlit, FastAPI, React, Node.js</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>☁️ Cloud & DevOps</h4>
+                        <p>Docker, AWS, GCP, CI/CD</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>📊 Data Engineering</h4>
+                        <p>Pandas, Spark, SQL, ETL</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>🐍 Python</h4>
+                        <p>Advanced, 5+ years experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="docs.html">Docs</a>
+                    <a href="architecture.html">Architecture</a>
+                    <a href="developer-guide.html">Developer Guide</a>
+                    <a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
+                </div>
+                <p class="footer-copy">Doctane © 2024</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
