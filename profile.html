@@ -6,116 +6,140 @@
     <title>Developer Profile | Doctane</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --border: #1e293b;
-            --card-bg: #1e293b;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --bg-body: #ffffff;
+            --bg-surface: #f0f4f8;
+            --bg-elevated: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a5568;
+            --text-tertiary: #718096;
+            --accent-blue: #1a73e8;
+            --accent-blue-hover: #1557b0;
+            --accent-green: #34a853;
+            --accent-purple: #8b5cf6;
+            --border-light: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(26, 115, 232, 0.08);
+            --shadow-md: 0 8px 24px rgba(26, 115, 232, 0.12);
+            --shadow-lg: 0 20px 40px rgba(26, 115, 232, 0.16);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--darker); color: var(--light); line-height: 1.6; }
+        body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         a { color: inherit; text-decoration: none; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
         
-        header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-        }
-        .nav-container {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1rem 2rem; max-width: 1400px; margin: 0 auto;
-        }
-        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.5rem; }
-        .logo-icon {
-            width: 40px; height: 40px; background: var(--gradient);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
-        }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { font-weight: 500; color: var(--gray); transition: color 0.2s; }
-        .nav-links a:hover { color: var(--light); }
-        .btn {
-            padding: 0.625rem 1.25rem; border-radius: 8px; font-weight: 500;
-            font-size: 0.875rem; cursor: pointer; transition: all 0.2s; border: none;
-        }
-        .btn-primary { background: var(--gradient); color: white; }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--light); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); transition: all 0.3s; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; max-width: 1400px; margin: 0 auto; height: 68px; }
+        .logo { display: flex; align-items: center; gap: 0.625rem; font-weight: 600; font-size: 1.375rem; letter-spacing: -0.01em; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.125rem; box-shadow: 0 4px 12px rgba(26, 115, 232, 0.25); }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { font-weight: 500; color: var(--text-secondary); font-size: 0.9rem; transition: all 0.3s; border-radius: 100px; padding: 0.5rem 1rem; }
+        .nav-links a:hover { color: var(--accent-purple); background: var(--bg-surface); }
+        .btn { padding: 0.625rem 1.25rem; border-radius: 100px; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; }
+        .btn-primary { background: var(--accent-blue); color: white; }
+        .btn-primary:hover { background: var(--accent-blue-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--bg-surface); color: var(--text-secondary); border: 1px solid var(--border-light); }
+        .btn-secondary:hover { border-color: var(--accent-purple); color: var(--accent-purple); }
         
         .main { padding: 8rem 0 4rem; }
         
         .profile-header {
-            display: flex; align-items: center; gap: 2rem;
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 16px; padding: 2rem; margin-bottom: 2rem;
+            display: flex; align-items: center; gap: 2.5rem;
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #e8ecf1 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 24px; padding: 2.5rem; margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
         .profile-avatar {
-            width: 120px; height: 120px; border-radius: 50%;
-            background: var(--gradient); display: flex;
-            align-items: center; justify-content: center; font-size: 3rem;
+            width: 130px; height: 130px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex; align-items: center; justify-content: center; font-size: 3.5rem;
             flex-shrink: 0;
+            animation: float 4s ease-in-out infinite;
+            box-shadow: 0 8px 32px rgba(26, 115, 232, 0.25);
+            position: relative;
         }
-        .profile-info h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-        .profile-info p { color: var(--gray); margin-bottom: 1rem; }
-        .profile-links { display: flex; gap: 1rem; }
+        .profile-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(16px);
+        }
+        .profile-info h1 { font-size: 2rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+        .profile-info p { color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 1.1rem; max-width: 550px; }
+        .profile-links { display: flex; gap: 0.875rem; }
         .profile-links a {
-            padding: 0.5rem 1rem; background: var(--dark); border: 1px solid var(--border);
-            border-radius: 8px; font-size: 0.875rem; transition: all 0.2s;
+            padding: 0.625rem 1.25rem; background: var(--bg-elevated); border: 1px solid var(--border-light);
+            border-radius: 100px; font-size: 0.875rem; font-weight: 500; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .profile-links a:hover { border-color: var(--primary); }
+        .profile-links a:hover { border-color: var(--accent-purple); color: var(--accent-purple); transform: translateY(-2px); box-shadow: var(--shadow-md); }
         
         .stats-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 2.5rem;
         }
         .stat-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: 1.5rem; text-align: center;
+            background: var(--bg-elevated); border: 1px solid var(--border-light);
+            border-radius: 16px; padding: 1.75rem; text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--primary); }
-        .stat-card .label { font-size: 0.875rem; color: var(--gray); }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--accent-purple); }
+        .stat-card .value { font-size: 2.25rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 0.25rem; }
+        .stat-card .label { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
         
-        .projects-section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; }
+        .projects-section h2 { font-size: 1.75rem; font-weight: 600; margin-bottom: 1.75rem; letter-spacing: -0.01em; }
         .projects-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;
         }
         .project-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: 1.5rem; transition: all 0.3s;
+            background: var(--bg-elevated); border: 1px solid var(--border-light);
+            border-radius: 16px; padding: 1.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .project-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .project-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
-        .project-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+        .project-card:hover { border-color: var(--accent-purple); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .project-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .project-card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem; }
         .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .project-tag {
-            padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 100px;
-            font-size: 0.75rem; color: var(--primary);
+            padding: 0.375rem 0.875rem; background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 100px;
+            font-size: 0.75rem; color: var(--accent-purple); font-weight: 500;
         }
         
-        .skills-section {
-            margin-top: 3rem;
-        }
-        .skills-section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; }
+        .skills-section { margin-top: 3rem; }
+        .skills-section h2 { font-size: 1.75rem; font-weight: 600; margin-bottom: 1.75rem; letter-spacing: -0.01em; }
         .skills-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
         }
         .skill-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1rem; text-align: center;
+            background: var(--bg-elevated); border: 1px solid var(--border-light);
+            border-radius: 12px; padding: 1.25rem; text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .skill-card h4 { font-size: 1rem; margin-bottom: 0.5rem; }
-        .skill-card p { color: var(--gray); font-size: 0.8rem; }
+        .skill-card:hover { border-color: var(--accent-purple); transform: translateY(-2px); }
+        .skill-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .skill-card p { color: var(--text-secondary); font-size: 0.8rem; }
         
         footer {
-            background: var(--dark); border-top: 1px solid var(--border);
+            background: var(--bg-surface); border-top: 1px solid var(--border-light);
             padding: 2rem 0; margin-top: 4rem;
         }
         .footer-content {
@@ -123,8 +147,9 @@
             flex-wrap: wrap; gap: 1rem;
         }
         .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { color: var(--gray); font-size: 0.875rem; }
-        .footer-copy { color: var(--gray); font-size: 0.875rem; }
+        .footer-links a { color: var(--text-secondary); font-size: 0.875rem; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--accent-purple); }
+        .footer-copy { color: var(--text-tertiary); font-size: 0.875rem; }
         
         @media (max-width: 768px) {
             .profile-header { flex-direction: column; text-align: center; }
@@ -242,7 +267,7 @@
                     </div>
                     <div class="skill-card">
                         <h4>👁️ Computer Vision</h4>
-                        <p>OCR, Object Detection, Segmentation, OCR</p>
+                        <p>OCR, Object Detection, Segmentation</p>
                     </div>
                     <div class="skill-card">
                         <h4>🌐 Web Development</h4>
