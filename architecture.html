@@ -30,46 +30,12 @@
         .btn-primary { background: var(--accent-blue); color: white; }
         .btn-primary:hover { background: var(--accent-blue-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .btn-secondary { background: transparent; color: var(--accent-blue); }
+        .mobile-menu-btn { display: none; background: none; border: none; padding: 0.5rem; cursor: pointer; color: var(--text-primary); }
+        .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0; background: var(--bg-body); padding: 1rem; z-index: 99; overflow-y: auto; }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a { display: block; padding: 1rem; font-size: 1.125rem; font-weight: 500; color: var(--text-secondary); border-bottom: 1px solid var(--border-light); }
         
-        .main { padding: 6rem 0 4rem; }
-        .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-header h1 { font-size: 2.5rem; font-weight: 400; margin-bottom: 1rem; }
-        .section-header p { color: var(--text-secondary); }
-        
-        .architecture-diagram { background: var(--bg-surface); border-radius: 24px; padding: 2rem; margin-bottom: 3rem; }
-        
-        .pipeline-flow { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 2rem 0; }
-        .pipeline-box { background: var(--bg-body); border: 2px solid var(--accent-blue); border-radius: 16px; padding: 1.5rem 2rem; text-align: center; min-width: 160px; transition: all 0.3s; }
-        .pipeline-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-        .pipeline-box h4 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent-blue); }
-        .pipeline-box p { font-size: 0.75rem; color: var(--text-secondary); }
-        .arrow { color: var(--accent-blue); font-size: 1.5rem; }
-        
-        .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-        .component-card { background: var(--bg-surface); border-radius: 16px; padding: 1.5rem; transition: all 0.3s; }
-        .component-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-        .component-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .component-card p { color: var(--text-secondary); font-size: 0.9rem; }
-        .component-card ul { list-style: none; margin-top: 1rem; }
-        .component-card li { padding: 0.5rem 0; border-bottom: 1px solid var(--border-light); font-size: 0.85rem; color: var(--text-secondary); display: flex; justify-content: space-between; }
-        .component-card li:last-child { border-bottom: none; }
-        .component-card li span { color: var(--accent-green); }
-        
-        .data-flow { background: var(--bg-surface); border-radius: 16px; padding: 2rem; margin-top: 3rem; }
-        .data-flow h3 { margin-bottom: 1.5rem; }
-        .flow-step { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
-        .flow-step-num { width: 28px; height: 28px; background: var(--accent-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 0.875rem; color: white; flex-shrink: 0; }
-        .flow-step-content h4 { font-size: 1rem; margin-bottom: 0.25rem; }
-        .flow-step-content p { color: var(--text-secondary); font-size: 0.875rem; }
-        
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-light); padding: 2rem 0; margin-top: 4rem; }
-        .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { font-size: 0.875rem; color: var(--text-secondary); }
-        .footer-links a:hover { color: var(--text-primary); }
-        .footer-copy { font-size: 0.875rem; color: var(--text-tertiary); }
-        
-        @media (max-width: 768px) { .nav-links { display: none; } .pipeline-flow { flex-direction: column; } .arrow { transform: rotate(90deg); } }
+        @media (max-width: 900px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } }
     </style>
 </head>
 <body>
@@ -84,15 +50,26 @@
                         <li><a href="index.html#models">Models</a></li>
                         <li><a href="index.html#quickstart">Get Started</a></li>
                         <li><a href="index.html#profile">Profile</a></li>
+                        <li><a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a></li>
+                        <li><a href="docs.html">Docs</a></li>
                     </ul>
-                    <div class="nav-actions">
-                        <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
-                        <a href="docs.html" class="btn btn-primary">Docs</a>
-                    </div>
+                    <button class="mobile-menu-btn" aria-label="Menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+                    </button>
                 </nav>
             </div>
         </div>
     </header>
+
+    <div class="mobile-menu">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#pipeline">Pipeline</a>
+        <a href="index.html#models">Models</a>
+        <a href="index.html#quickstart">Get Started</a>
+        <a href="index.html#profile">Profile</a>
+        <a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
+        <a href="docs.html">Docs</a>
+    </div>
 
     <main class="main">
         <div class="container">
@@ -228,5 +205,15 @@
             </div>
         </div>
     </footer>
+    <script>
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('active');
+        });
+        document.querySelectorAll('.mobile-menu a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.querySelector('.mobile-menu').classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>

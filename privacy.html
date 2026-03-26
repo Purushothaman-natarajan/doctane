@@ -23,20 +23,27 @@
         .nav-links { display: flex; gap: 0.25rem; list-style: none; }
         .nav-links a { padding: 0.5rem 1rem; font-size: 0.875rem; color: var(--text-secondary); border-radius: 100px; transition: all 0.3s; font-weight: 500; }
         .nav-links a:hover { background: var(--bg-surface); color: var(--accent-purple); }
+        .mobile-menu-btn { display: none; background: none; border: none; padding: 0.5rem; cursor: pointer; color: var(--text-primary); }
+        .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0; background: var(--bg-body); padding: 1rem; z-index: 99; overflow-y: auto; }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a { display: block; padding: 1rem; font-size: 1.125rem; font-weight: 500; color: var(--text-secondary); border-bottom: 1px solid var(--border-light); }
+        
+        @media (max-width: 900px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } }
         
         .main { padding: 6rem 0 4rem; }
-        .content { background: var(--bg-surface); border-radius: 16px; padding: 2.5rem; }
-        .content h1 { font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+        .content { background: var(--bg-surface); border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border-light); }
+        .content h1 { font-size: 2rem; font-weight: 600; margin-bottom: 0.5rem; }
         .content .updated { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 2rem; }
-        .content h2 { font-size: 1.25rem; font-weight: 500; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-light); }
+        .content h2 { font-size: 1.25rem; font-weight: 600; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-light); }
         .content p { color: var(--text-secondary); margin-bottom: 1rem; }
         .content ul { margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary); }
         .content li { margin-bottom: 0.5rem; }
         
         footer { background: var(--bg-surface); border-top: 1px solid var(--border-light); padding: 2rem 0; margin-top: 4rem; }
         .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { font-size: 0.875rem; color: var(--text-secondary); }
+        .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .footer-links a { font-size: 0.875rem; color: var(--text-secondary); transition: color 0.3s; }
+        .footer-links a:hover { color: var(--accent-purple); }
         .footer-copy { font-size: 0.875rem; color: var(--text-tertiary); }
     </style>
 </head>
@@ -49,12 +56,30 @@
                     <ul class="nav-links">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="docs.html">Docs</a></li>
+                        <li><a href="architecture.html">Architecture</a></li>
+                        <li><a href="developer-guide.html">Dev Guide</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
                         <li><a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a></li>
                     </ul>
+                    <button class="mobile-menu-btn" aria-label="Menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+                    </button>
                 </nav>
             </div>
         </div>
     </header>
+
+    <div class="mobile-menu">
+        <a href="index.html">Home</a>
+        <a href="docs.html">Docs</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="developer-guide.html">Dev Guide</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
+    </div>
+
     <main class="main">
         <div class="container">
             <div class="content">
@@ -78,11 +103,21 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="index.html">Home</a><a href="docs.html">Docs</a><a href="architecture.html">Architecture</a><a href="developer-guide.html">Developer Guide</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
+                    <a href="index.html">Home</a><a href="docs.html">Docs</a><a href="architecture.html">Architecture</a><a href="developer-guide.html">Dev Guide</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
                 </div>
                 <p class="footer-copy">Doctane - OCR Development Environment</p>
             </div>
         </div>
     </footer>
+    <script>
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('active');
+        });
+        document.querySelectorAll('.mobile-menu a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.querySelector('.mobile-menu').classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>

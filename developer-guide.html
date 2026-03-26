@@ -28,13 +28,19 @@
         .btn-primary { background: var(--accent-blue); color: white; }
         .btn-primary:hover { background: var(--accent-blue-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .btn-secondary { background: transparent; color: var(--accent-blue); }
+        .mobile-menu-btn { display: none; background: none; border: none; padding: 0.5rem; cursor: pointer; color: var(--text-primary); }
+        .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0; background: var(--bg-body); padding: 1rem; z-index: 99; overflow-y: auto; }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a { display: block; padding: 1rem; font-size: 1.125rem; font-weight: 500; color: var(--text-secondary); border-bottom: 1px solid var(--border-light); }
+        
+        @media (max-width: 900px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } }
         
         .main { padding: 6rem 0 4rem; }
         .section-header { margin-bottom: 2rem; }
         .section-header h1 { font-size: 2.5rem; font-weight: 400; margin-bottom: 0.5rem; }
         .section-header p { color: var(--text-secondary); }
         
-        .code-block { background: #1e1e1e; border-radius: 12px; padding: 1.25rem; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 1rem 0; }
+        .code-block { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; padding: 1.25rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; overflow-x: auto; margin: 1rem 0; border: 1px solid rgba(139, 92, 246, 0.15); }
         .code-block .comment { color: #6a9955; }
         .code-block .keyword { color: #569cd6; }
         
@@ -79,15 +85,26 @@
                         <li><a href="index.html#models">Models</a></li>
                         <li><a href="index.html#quickstart">Get Started</a></li>
                         <li><a href="index.html#profile">Profile</a></li>
+                        <li><a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a></li>
+                        <li><a href="docs.html">Docs</a></li>
                     </ul>
-                    <div class="nav-actions">
-                        <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
-                        <a href="docs.html" class="btn btn-primary">Docs</a>
-                    </div>
+                    <button class="mobile-menu-btn" aria-label="Menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+                    </button>
                 </nav>
             </div>
         </div>
     </header>
+
+    <div class="mobile-menu">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#pipeline">Pipeline</a>
+        <a href="index.html#models">Models</a>
+        <a href="index.html#quickstart">Get Started</a>
+        <a href="index.html#profile">Profile</a>
+        <a href="https://github.com/Purushothaman-natarajan/doctane">GitHub</a>
+        <a href="docs.html">Docs</a>
+    </div>
 
     <main class="main">
         <div class="container">
@@ -144,5 +161,15 @@
             </div>
         </div>
     </footer>
+    <script>
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('active');
+        });
+        document.querySelectorAll('.mobile-menu a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.querySelector('.mobile-menu').classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
