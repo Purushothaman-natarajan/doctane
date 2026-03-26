@@ -3,50 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctane | Intelligent Document Analysis</title>
+    <title>Doctane | Open-Source OCR Development Framework</title>
+    <meta name="description" content="Open-source document understanding framework. Build, train, and deploy your own OCR models.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --border: #1e293b;
-            --card-bg: #1e293b;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1f1f1f;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1a1;
+            --text-muted: #6b6b6b;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --border: #2a2a2a;
+            --border-light: #3a3a3a;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--darker);
-            color: var(--light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
+        
+        a { color: inherit; text-decoration: none; }
+        
+        img { max-width: 100%; height: auto; }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
         }
-
+        
         /* Header */
         header {
             position: fixed;
@@ -54,646 +54,550 @@
             left: 0;
             right: 0;
             z-index: 100;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
         }
-
-        .nav-container {
+        
+        .header-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 1rem 0;
         }
-
+        
         .logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-weight: 700;
-            font-size: 1.5rem;
+            font-weight: 600;
+            font-size: 1.25rem;
         }
-
+        
         .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        
+        nav { display: flex; align-items: center; gap: 2rem; }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover { color: var(--text-primary); }
+        
+        .nav-actions { display: flex; gap: 0.75rem; }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover { background: var(--accent-hover); }
+        
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover { border-color: var(--border-light); }
+        
+        /* Mobile Menu */
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            nav { gap: 1rem; }
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.875rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat { display: flex; flex-direction: column; }
+        
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+        
+        .stat-label { font-size: 0.8rem; color: var(--text-muted); }
+        
+        /* Content Sections */
+        section { padding: 4rem 0; }
+        
+        .section-header { margin-bottom: 3rem; }
+        
+        .section-header h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .section-header p { color: var(--text-secondary); }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+        
+        .feature-card:hover { border-color: var(--border-light); }
+        
+        .feature-icon {
             width: 40px;
             height: 40px;
-            background: var(--gradient);
+            background: rgba(99, 102, 241, 0.1);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.25rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            color: var(--gray);
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--light);
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.625rem 1.25rem;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--light);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-        }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 80px;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-                var(--darker);
-        }
-
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 100px;
-            font-size: 0.875rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--gray);
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .stat {
-            text-align: left;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--gray);
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        /* Features */
-        .features {
-            padding: 6rem 0;
-            background: var(--dark);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
-
-        .section-header p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
+        
         .feature-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
-
+        
         .feature-card p {
-            color: var(--gray);
             font-size: 0.9rem;
+            color: var(--text-secondary);
         }
-
+        
         /* Pipeline */
-        .pipeline {
-            padding: 6rem 0;
-        }
-
         .pipeline-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
         }
-
+        
         @media (max-width: 1024px) {
-            .pipeline-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .pipeline-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
+        
         @media (max-width: 640px) {
-            .pipeline-grid {
-                grid-template-columns: 1fr;
-            }
+            .pipeline-grid { grid-template-columns: 1fr; }
         }
-
+        
         .pipeline-step {
-            background: var(--card-bg);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
+            border-radius: 12px;
+            padding: 1.5rem;
             position: relative;
         }
-
-        .pipeline-step::after {
-            content: '→';
-            position: absolute;
-            right: -1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: 1.5rem;
-            display: none;
-        }
-
-        @media (min-width: 1025px) {
-            .pipeline-step:not(:last-child)::after {
-                display: block;
-            }
-        }
-
+        
         .step-number {
-            width: 32px;
-            height: 32px;
-            background: var(--gradient);
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             margin-bottom: 1rem;
         }
-
+        
         .pipeline-step h3 {
-            font-size: 1.125rem;
+            font-size: 1rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
-
+        
         .pipeline-step p {
-            color: var(--gray);
-            font-size: 0.875rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
-
-        /* Models */
-        .models {
-            padding: 6rem 0;
-            background: var(--dark);
-        }
-
+        
+        /* Models Grid */
         .models-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
         }
-
+        
         .model-card {
-            background: var(--card-bg);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 10px;
+            padding: 1.25rem;
             text-align: center;
             transition: all 0.2s;
         }
-
-        .model-card:hover {
-            border-color: var(--secondary);
-        }
-
-        .model-card h4 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
+        
+        .model-card:hover { border-color: var(--success); }
+        
+        .model-card h4 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+        
         .model-card span {
             font-size: 0.75rem;
-            color: var(--secondary);
+            color: var(--success);
         }
-
-        /* Quick Start */
-        .quickstart {
-            padding: 6rem 0;
+        
+        /* Important Notes Box */
+        .notes-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
-
-        .code-block {
-            background: var(--darker);
+        
+        .note-box {
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.5rem;
+        }
+        
+        .note-box h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .note-box.warning h4 { color: var(--warning); }
+        
+        .note-box.success h4 { color: var(--success); }
+        
+        .note-box p { font-size: 0.9rem; color: var(--text-secondary); }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             overflow-x: auto;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
-
-        .code-block .comment {
-            color: var(--gray);
-        }
-
-        .code-block .keyword {
-            color: var(--primary);
-        }
-
-        .code-block .string {
-            color: var(--secondary);
-        }
-
-        .code-block .function {
-            color: var(--accent);
-        }
-
+        
+        .code-block .comment { color: var(--text-muted); }
+        .code-block .keyword { color: var(--accent); }
+        .code-block .string { color: var(--success); }
+        
+        /* Setup Steps */
         .setup-steps {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
-
+        
         @media (max-width: 768px) {
-            .setup-steps {
-                grid-template-columns: 1fr;
-            }
+            .setup-steps { grid-template-columns: 1fr; }
         }
-
+        
         .setup-step {
-            background: var(--card-bg);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.5rem;
         }
-
+        
         .setup-step-number {
             width: 28px;
             height: 28px;
-            background: var(--primary);
+            background: var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             margin-bottom: 1rem;
         }
-
+        
+        .setup-step h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+        .setup-step p { font-size: 0.85rem; color: var(--text-secondary); }
+        
         /* Footer */
         footer {
-            background: var(--dark);
+            background: var(--bg-secondary);
             border-top: 1px solid var(--border);
             padding: 3rem 0 2rem;
+            margin-top: 4rem;
         }
-
+        
         .footer-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
         }
-
+        
         .footer-links {
             display: flex;
             gap: 1.5rem;
+            flex-wrap: wrap;
         }
-
+        
         .footer-links a {
-            color: var(--gray);
             font-size: 0.875rem;
+            color: var(--text-secondary);
         }
-
-        .footer-links a:hover {
-            color: var(--light);
-        }
-
+        
+        .footer-links a:hover { color: var(--text-primary); }
+        
         .footer-copy {
-            color: var(--gray);
             font-size: 0.875rem;
+            color: var(--text-muted);
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-            }
-        }
+        
+        /* Utility */
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 1rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
     </style>
 </head>
 <body>
     <header>
-        <nav class="nav-container">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">🔬</div>
-                <span>Doctane</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#pipeline">Pipeline</a></li>
-                <li><a href="#models">Models</a></li>
-                <li><a href="#quickstart">Quick Start</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
-                <a href="docs.html" class="btn btn-primary">Docs</a>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🔬</div>
+                    <span>Doctane</span>
+                </a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pipeline">Pipeline</a></li>
+                        <li><a href="#models">Models</a></li>
+                        <li><a href="#quickstart">Quick Start</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <a href="https://github.com/Purushothaman-natarajan/doctane" class="btn btn-secondary">GitHub</a>
+                        <a href="docs.html" class="btn btn-primary">Docs</a>
+                    </div>
+                    <button class="mobile-menu-btn" aria-label="Menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12h18M3 6h18M3 18h18"></path>
+                        </svg>
+                    </button>
+                </nav>
             </div>
-        </nav>
+        </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
+    <main>
+        <section class="hero">
+            <div class="container">
                 <div class="hero-badge">
-                    <span>🚀</span> Version 0.1.0 Alpha
+                    <span>🚀</span> Open Source
                 </div>
-                <h1>Intelligent Document Analysis & Understanding</h1>
-                <p>Multimodal pipeline for OCR, layout understanding, semantic extraction, and document captioning. Built with state-of-the-art deep learning models.</p>
-                <div class="hero-actions">
-                    <a href="#quickstart" class="btn btn-primary">Get Started</a>
-                    <a href="#pipeline" class="btn btn-secondary">View Pipeline</a>
-                </div>
+                <h1>Build Your Own<br>OCR Pipeline</h1>
+                <p>Open-source document understanding framework. Complete training scripts, modular architecture, and full control. Train your own models on your infrastructure.</p>
                 <div class="hero-stats">
                     <div class="stat">
-                        <div class="stat-value">10+</div>
-                        <div class="stat-label">Detection Models</div>
+                        <span class="stat-value">10+</span>
+                        <span class="stat-label">Detection Models</span>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">15+</div>
-                        <div class="stat-label">Recognition Models</div>
+                        <span class="stat-value">15+</span>
+                        <span class="stat-label">Recognition Models</span>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">5+</div>
-                        <div class="stat-label">Languages</div>
+                        <span class="stat-value">DDP</span>
+                        <span class="stat-label">Multi-GPU Support</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Why Doctane?</h2>
-                <p>A unified framework for end-to-end document intelligence with cutting-edge accuracy and speed.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3>End-to-End OCR</h3>
-                    <p>Complete pipeline from text detection to recognition with unified models. Handles straight and rotated text seamlessly.</p>
+        <section id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Doctane?</h2>
+                    <p>Complete control over your document processing pipeline</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Layout Understanding</h3>
-                    <p>Automatic page orientation detection and straightening. Multi-column document support with structure preservation.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏗️</div>
-                    <h3>Modular Architecture</h3>
-                    <p>Plug-and-play model components. Easy to extend with custom models and preprocessing pipelines.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>High Performance</h3>
-                    <p>Optimized inference with PyTorch. DDP training support for multi-GPU acceleration.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Multi-Language</h3>
-                    <p>Support for English, French, and extensible to other languages. Language detection included.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Structured Output</h3>
-                    <p>Hierarchical Document objects (Page, Block, Line, Word). Export to JSON and hOCR formats.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎓</div>
-                    <h3>Train Your Own Models</h3>
-                    <p>Complete training scripts with DDP support. Bring your own infrastructure - we provide the code, you bring the compute.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>End-to-End OCR</h3>
+                        <p>Complete pipeline from text detection to recognition. Handles straight and rotated text seamlessly.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Layout Understanding</h3>
+                        <p>Automatic page orientation detection and straightening. Multi-column document support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏗️</div>
+                        <h3>Modular Architecture</h3>
+                        <p>Plug-and-play model components. Easy to extend with custom models and pipelines.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>High Performance</h3>
+                        <p>Optimized inference with PyTorch. DDP training support for multi-GPU acceleration.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Multi-Language</h3>
+                        <p>Support for English, French, and extensible to other languages.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Structured Output</h3>
+                        <p>Hierarchical Document objects. Export to JSON and hOCR formats.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="pipeline" id="pipeline">
-        <div class="container">
-            <div class="section-header">
-                <h2>Processing Pipeline</h2>
-                <p>Four-stage pipeline for complete document understanding</p>
+        <section id="pipeline">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Processing Pipeline</h2>
+                    <p>Four-stage pipeline for complete document understanding</p>
+                </div>
+                <div class="pipeline-grid">
+                    <div class="pipeline-step">
+                        <div class="step-number">1</div>
+                        <h3>Preprocessing</h3>
+                        <p>Page orientation detection and optional straightening.</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="step-number">2</div>
+                        <h3>Text Detection</h3>
+                        <p>Segmentation-based model identifies text regions.</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="step-number">3</div>
+                        <h3>Text Recognition</h3>
+                        <p>Crops fed to recognition model for transcription.</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="step-number">4</div>
+                        <h3>Document Assembly</h3>
+                        <p>Structured output with geometry and confidence scores.</p>
+                    </div>
+                </div>
             </div>
-            <div class="pipeline-grid">
-                <div class="pipeline-step">
-                    <div class="step-number">1</div>
-                    <h3>Preprocessing</h3>
-                    <p>Page orientation detection and optional straightening for optimal processing.</p>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-number">2</div>
-                    <h3>Text Detection</h3>
-                    <p>Segmentation-based model identifies word/line bounding boxes (straight & rotated).</p>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-number">3</div>
-                    <h3>Text Recognition</h3>
-                    <p>Crops fed to recognition model for accurate text transcription.</p>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-number">4</div>
-                    <h3>Document Assembly</h3>
-                    <p>Structured output with geometry, confidence scores, and KIE support.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="models" id="models">
-        <div class="container">
-            <div class="section-header">
-                <h2>Supported Models</h2>
-                <p>State-of-the-art architectures for every stage</p>
-            </div>
-            <div class="models-grid">
-                <div class="model-card">
-                    <h4>LinkNet</h4>
-                    <span>Detection</span>
+        <section id="models">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Supported Models</h2>
+                    <p>State-of-the-art architectures for every stage</p>
                 </div>
-                <div class="model-card">
-                    <h4>DeepLabV3+</h4>
-                    <span>Detection</span>
-                </div>
-                <div class="model-card">
-                    <h4>SegFormer</h4>
-                    <span>Detection</span>
-                </div>
-                <div class="model-card">
-                    <h4>Faster R-CNN</h4>
-                    <span>Detection</span>
-                </div>
-                <div class="model-card">
-                    <h4>SAR</h4>
-                    <span>Recognition</span>
-                </div>
-                <div class="model-card">
-                    <h4>ViTSTR</h4>
-                    <span>Recognition</span>
-                </div>
-                <div class="model-card">
-                    <h4>CRNN</h4>
-                    <span>Recognition</span>
-                </div>
-                <div class="model-card">
-                    <h4>TrBA</h4>
-                    <span>Recognition</span>
-                </div>
-                <div class="model-card">
-                    <h4>MASTER</h4>
-                    <span>Recognition</span>
-                </div>
-                <div class="model-card">
-                    <h4>ABINet</h4>
-                    <span>Recognition</span>
-                </div>
-                <div class="model-card">
-                    <h4>VisionLAN</h4>
-                    <span>Recognition</span>
-                </div>
-                <div class="model-card">
-                    <h4>DiT</h4>
-                    <span>Recognition</span>
+                <div class="models-grid">
+                    <div class="model-card"><h4>LinkNet</h4><span>Detection</span></div>
+                    <div class="model-card"><h4>DeepLabV3+</h4><span>Detection</span></div>
+                    <div class="model-card"><h4>SegFormer</h4><span>Detection</span></div>
+                    <div class="model-card"><h4>Faster R-CNN</h4><span>Detection</span></div>
+                    <div class="model-card"><h4>SAR</h4><span>Recognition</span></div>
+                    <div class="model-card"><h4>ViTSTR</h4><span>Recognition</span></div>
+                    <div class="model-card"><h4>CRNN</h4><span>Recognition</span></div>
+                    <div class="model-card"><h4>TrBA</h4><span>Recognition</span></div>
+                    <div class="model-card"><h4>MASTER</h4><span>Recognition</span></div>
+                    <div class="model-card"><h4>ABINet</h4><span>Recognition</span></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="quickstart" id="quickstart">
-        <div class="container">
-            <div class="section-header">
-                <h2>Quick Start</h2>
-                <p>Get up and running in minutes</p>
-            </div>
-            <div class="code-block">
+        <section id="quickstart">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Quick Start</h2>
+                    <p>Get up and running in minutes</p>
+                </div>
+                <div class="code-block">
 <span class="comment"># Clone the repository</span>
 <span class="keyword">git</span> clone https://github.com/Purushothaman-natarajan/doctane.git
 <span class="keyword">cd</span> doctane
@@ -703,39 +607,41 @@
 
 <span class="comment"># Start the API server</span>
 <span class="keyword">python</span> api/main.py
+                </div>
+                <div class="setup-steps">
+                    <div class="setup-step">
+                        <div class="setup-step-number">1</div>
+                        <h4>Clone</h4>
+                        <p>Download the repository from GitHub</p>
+                    </div>
+                    <div class="setup-step">
+                        <div class="setup-step-number">2</div>
+                        <h4>Install</h4>
+                        <p>Run pip install to get all dependencies</p>
+                    </div>
+                    <div class="setup-step">
+                        <div class="setup-step-number">3</div>
+                        <h4>Launch</h4>
+                        <p>Start API server and open http://localhost:8000/app</p>
+                    </div>
+                </div>
+                
+                <div class="section-header" style="margin-top: 3rem;">
+                    <h2>Important Notes</h2>
+                </div>
+                <div class="notes-section">
+                    <div class="note-box warning">
+                        <h4>🔧 No Pre-trained Weights</h4>
+                        <p>We provide the <strong>code only</strong>, not pre-trained model weights. You need to train your own models using the provided training scripts.</p>
+                    </div>
+                    <div class="note-box success">
+                        <h4>💻 Bring Your Infrastructure</h4>
+                        <p>Training requires GPU resources. You must have your own infrastructure (local GPU, cloud like AWS/GCP/Azure). We support DDP for multi-GPU.</p>
+                    </div>
+                </div>
             </div>
-            <div class="setup-steps">
-                <div class="setup-step">
-                    <div class="setup-step-number">1</div>
-                    <h4>Clone</h4>
-                    <p>Download the repository from GitHub</p>
-                </div>
-                <div class="setup-step">
-                    <div class="setup-step-number">2</div>
-                    <h4>Install</h4>
-                    <p>Run pip install to get all dependencies</p>
-                </div>
-                <div class="setup-step">
-                    <div class="setup-step-number">3</div>
-                    <h4>Launch</h4>
-                    <p>Start API server and open http://localhost:8000/app</p>
-                </div>
-            </div>
-            <div class="section-header" style="margin-top: 3rem;">
-                <h2 style="font-size: 1.5rem;">Important Notes</h2>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
-                    <h4 style="color: var(--primary); margin-bottom: 0.75rem;">🔧 No Pre-trained Weights</h4>
-                    <p style="color: var(--gray); font-size: 0.9rem;">We provide the <strong>code only</strong>, not pre-trained model weights. You need to train your own models using the provided training scripts. We don't host or provide any model weights.</p>
-                </div>
-                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
-                    <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">💻 Bring Your Infrastructure</h4>
-                    <p style="color: var(--gray); font-size: 0.9rem;">Training requires GPU resources. You must have your own infrastructure (local GPU, cloud instances like AWS/GCP/Azure). We support distributed training with DDP for multi-GPU setups.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
         <div class="container">
