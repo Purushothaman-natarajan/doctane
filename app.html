@@ -276,16 +276,13 @@
                 <div class="form-group">
                     <label>Detection Model</label>
                     <select class="form-control" id="detection-model">
-                        <option value="seg_linknet_resnet50">LinkNet-ResNet50</option>
-                        <option value="seg_deeplabv3plus_resnet50">DeepLabV3+-ResNet50</option>
-                        <option value="seg_segformer_resnet50">SegFormer-ResNet50</option>
+                        <option value="">Loading models...</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Recognition Model</label>
                     <select class="form-control" id="recognition-model">
-                        <option value="sar_resnet34">SAR-ResNet34</option>
-                        <option value="sar_resnet18">SAR-ResNet18</option>
+                        <option value="">Loading models...</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -491,6 +488,48 @@
         }
 
         // ============= API =============
+        async function loadModelsFromApi() {
+            try {
+                const response = await fetch(`${state.apiUrl}/models`, {
+                    signal: AbortSignal.timeout(5000)
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    const detSelect = document.getElementById('detection-model');
+                    const recoSelect = document.getElementById('recognition-model');
+                    
+                    detSelect.innerHTML = '';
+                    recoSelect.innerHTML = '';
+                    
+                    // Add detection models
+                    data.detection.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.name;
+                        option.textContent = model.name.replace(/_/g, ' ').replace(/seg /g, '').replace(/resnet(\d+)/i, 'ResNet$1').replace(/efficientnet/i, 'EffNet').replace(/mit/i, 'MiT');
+                        detSelect.appendChild(option);
+                    });
+                    
+                    // Add recognition models
+                    data.recognition.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.name;
+                        option.textContent = model.name.replace(/_/g, ' ').replace(/resnet(\d+)/i, 'ResNet$1').replace(/vitstr/ViTSTR/i);
+                        recoSelect.appendChild(option);
+                    });
+                    
+                    showToast(`Loaded ${data.detection.length} detection and ${data.recognition.length} recognition models`);
+                }
+            } catch (e) {
+                console.error('Failed to load models:', e);
+                // Fallback to default models
+                const detSelect = document.getElementById('detection-model');
+                const recoSelect = document.getElementById('recognition-model');
+                detSelect.innerHTML = '<option value="seg_linknet_resnet50">LinkNet-ResNet50</option>';
+                recoSelect.innerHTML = '<option value="sar_resnet34">SAR-ResNet34</option>';
+            }
+        }
+
         async function checkApiHealth() {
             try {
                 const response = await fetch(`${state.apiUrl}/health`, { 
@@ -651,6 +690,7 @@
         // ============= Init =============
         async function init() {
             await checkApiHealth();
+            await loadModelsFromApi();
             setInterval(checkApiHealth, 30000); // Check every 30s
         }
         
