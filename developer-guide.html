@@ -173,7 +173,7 @@
                     <div class="setup-step">
                         <h4><span class="setup-step-num">4</span> Run Development Server</h4>
                         <div class="code-block" style="margin-top: 0.5rem; padding: 0.75rem;">
-<span class="keyword">streamlit</span> run app.py
+<span class="keyword">python</span> api/main.py
                         </div>
                     </div>
                 </div>
@@ -255,8 +255,10 @@ results.show()
                 <h2>🎯 Project Structure</h2>
                 <div class="code-block">
 doctane/
-├── app.py                 <span class="comment"># Streamlit web interface</span>
-├── index.html             <span class="comment"># Landing page</span>
+├── api/                    <span class="comment"># FastAPI backend</span>
+│   └── main.py             <span class="comment"># API server</span>
+├── app.html                <span class="comment"># Web interface</span>
+├── index.html              <span class="comment"># Landing page</span>
 ├── docs.html              <span class="comment"># Documentation</span>
 ├── architecture.html      <span class="comment"># System architecture</span>
 ├── profile.html           <span class="comment"># Developer profile</span>
