@@ -1,0 +1,28 @@
+title: Doctane
+description: Open-source document understanding framework. Build, train, and deploy your own OCR models.
+url: https://purushothaman-natarajan.github.io/doctane
+repository: Purushothaman-natarajan/doctane
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-robots
+
+twitter:
+  username: Purushothaman_n
+
+social:
+  name: Purushothaman Natarajan
+  links:
+    - https://github.com/Purushothaman-natarajan
+    - https://purushothaman-natarajan.github.io/
+
+google_site_verification: 
+
+linkedin: purushothaman-natarajan
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
